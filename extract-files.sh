@@ -8,6 +8,7 @@
 function blob_fixup() {
     case "${1}" in
         vendor/bin/mnld)
+
             [ "$2" = "" ] && return 0
             "$PATCHELF" --add-needed "libshim_sensors.so" "$2"
             ;;
@@ -25,6 +26,10 @@ function blob_fixup() {
 
 function blob_fixup_dry() {
     blob_fixup "$1" ""
+=======
+            grep -q "libshim_sensors.so" "$2" || "$PATCHELF" --add-needed "libshim_sensors.so" "$2"
+            ;;
+    esac
 }
 
 # If we're being sourced by the common script that we called,
